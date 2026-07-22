@@ -1,0 +1,131 @@
+brianL, cadenK, claireS, tracyY -- 2025-5-6 22:30
+- Finished v0 of the design doc
+
+tracyY -- 2025-5-5 X:XX
+- started chat in branch: tye
+
+claireS -- 2025-5-5 9:00
+- started db functions
+
+claireS -- 2025-5-6 8:00
+- tested exporting db functions
+
+brianL -- 2025-5-8 9:40
+- Revised design doc.
+- make the purposes of the database tables more clear
+- reorganized and redistributed task breakdown
+- added more specifics in the backend components
+
+tracyY -- 2025-5-6 X:XX
+- finished chat
+
+tracyY -- 2025-5-9 X:XX
+- first try at connecting sqlite database
+
+tracyY --2025-5-15 X:XX
+- database for storing roles, user_id, room is functional and in place
+- cannot join room if room capacity is full
+
+cadenK --2025-5-15 11:00
+- Fixed the Node backend to be able to serve the multiplayer game on the page
+- Created an aesthetically pleasing frontend and added pages like login and homepage
+
+tracyY --2025-5-19 X:XX
+- added logic to grab/emit information from/to backend in night
+
+claireS -- 2025-5-19 11:00
+- started background & actions for narration
+
+tracyY --2025-5-20 4:58
+- made the constant display components
+- added in selecting targets for special roles
+- finished night display
+
+claireS -- 2025-05-21
+- finished narration
+
+tracyY --2025-5-21 11:19
+- finished adding the timer
+- when night finished, now routes to chat
+
+cadenK --2025-5-22 11:00
+- Fixed and improved on the waiting room page
+
+claireS -- 2025-05-26 1:00
+- Starter code for animations
+
+claireS -- 2025-05-28 11:00
+- stroll animation
+
+tracyY --2025-05-28 5:03
+- added waiting room
+- added role effects on dawn page
+
+tracyY --2025-05-28 11:45
+- doctor role works
+- mafia role works
+- the mafia can now commit suicide :D
+- night cycle loops properly with dawn
+- added spectating when dead
+
+tracyY --2025-05-29 X:XX
+- added cop roles
+
+claireS -- 2025-05-29 11:00
+- dog animation
+
+tracyY --2025-05-30 X:XX
+- waiting room now shows how many members (and who) are in the room
+- working on evening and dusk
+
+claireS -- 2025-05-30 11:00
+- linking animation to narration
+
+tracyY --2025-06-01 X:XX
+- finished evening
+- finished dusk
+- condemn is working (slight problem with timing but uhhh you'll see)
+- found that all the async functions was making the pages not synced (duh) but that means some code would run multiple times and mess it up for the condemn, especially. So I added in on some pages a re-align block...
+
+cadenK -- 2025-06-01 X:XX
+- Moved over CSS from game.html to the actual functioning game
+- Added flash messages for full room and spectators
+
+claireS -- 2025-06-02 11:00
+- stitching together different scenes
+- soda animation
+
+claireS -- 2025-06-03 11:00
+- finished different scenarios for murder & condemning
+- animated condemn
+
+tracyY --2025-06-03 12:37
+- Win conditions added
+
+brianL --2025-06-04 10:30
+- moved timer to backend to stop everything from desyncing
+
+claireS -- 2025-06-04 11:00
+- used react to create canvas
+- tried to fix animations showing up on top of each other
+
+brianL --2025-06-04 1:45
+- fixed condemn and cop functionality with new timer
+
+claireS -- 2025-06-05 3:00
+- edit narration cases
+- canvas is working in dawn and dusk
+
+brianL --2025-06-05 10:30
+- debugging - fixed timer not stopping when game ends
+
+tracyY --2025-06-05 11:14
+- fool
+- narration
+- a lot of failed debugging
+
+cadenK --2025-06-05 11:14
+- Finished CSS and fixed bugs throughout entire game
+
+JavaScript style revisions 5/23:
+ - the biggest issue is most likely with the usage of arrow functions instead of function declarations even when they are not necessary, such as in App.js. If time allows, we will likely go through the code and clean up functions as needed

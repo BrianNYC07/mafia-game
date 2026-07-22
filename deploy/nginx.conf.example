@@ -1,0 +1,56 @@
+# Multi-instance Mafia deployment (audit M1).
+#
+# Room affinity: the client puts the room code in the connection URL
+# (?room=<code>, attached to every socket.io/engine.io request), and the
+# upstream hashes on it — so all 5 players of a room always reach the same
+# Node instance, where that room's authoritative state lives in memory.
+# Redis (REDIS_URL on each instance) provides the cross-instance socket.io
+# adapter and the room-ownership registry that turns any routing mistake
+# into a clean join error instead of a split-brain room.
+
+upstream mafia_backend {
+    hash $arg_room consistent;
+    server 127.0.0.1:3001;
+    server 127.0.0.1:3002;
+    # Add one line per additional instance. Adding/removing instances only
+    # remaps ~1/N of room codes thanks to consistent hashing; in-flight
+    # rooms on remapped codes are protected by the ownership registry.
+}
+
+server {
+    listen 443 ssl;
+    server_name brianl.tech;
+
+    # ssl_certificate     /etc/letsencrypt/live/brianl.tech/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/brianl.tech/privkey.pem;
+
+    # React production build (app/front/build), served statically.
+    root /var/www/mafia/build;
+    index index.html;
+    location / {
+        try_files $uri /index.html;
+    }
+
+    # WebSocket/polling traffic → room-hashed backend instance.
+    location /socket.io/ {
+        proxy_pass http://mafia_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 120s;
+    }
+
+    # Health checks (round-robins across instances; hit :3001/healthz etc.
+    # directly to check a specific instance).
+    location /healthz {
+        proxy_pass http://mafia_backend;
+    }
+}
+
+server {
+    listen 80;
+    server_name brianl.tech;
+    return 301 https://$host$request_uri;
+}

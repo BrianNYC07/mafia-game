@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mafia Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .game-container {
+      width: 90%;
+      max-width: 1200px;
+      background-color: red;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 90%;
+    }
+
+    .game-header {
+      background-color: blue;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .role-timer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .role,
+    .timer {
+      font-size: 1.2em;
+    }
+
+    .role,
+    .time {
+      font-weight: bold;
+    }
+
+    .game-main {
+      display: flex;
+      flex: 1;
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .narration {
+      flex: 2;
+      background-color: #16a085;
+      padding: 15px;
+      border-radius: 8px;
+      min-height: 200px;
+    }
+
+    .narration-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .narration {
+      font-size: 1.2em;
+      color: #ecf0f1;
+    }
+
+    .user-lists {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .alive-users,
+    .spectators {
+      background-color: #1abc9c;
+      padding: 15px;
+      border-radius: 8px;
+      min-height: 200px;
+    }
+
+    h3 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    .user-list {
+      list-style-type: none;
+    }
+
+    .user {
+      background-color: #ecf0f1;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .game-footer {
+      background-color: #16a085;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chat {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chat-log {
+      list-style-type: none;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .chat-message {
+      background-color: #ecf0f1;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .chat-input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      resize: none;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <!-- Header Section -->
+    <header class="game-header">
+      <div class="role-timer">
+        <span class="role">Your Role: <span class="role">whatever</span></span>
+        <span class="timer">Time Remaining: <span class="time">00:00</span></span>
+      </div>
+    </header>
+
+    <main class="game-main">
+      <div class="narration">
+        <h2 class="narration-title">Narration</h2>
+        <p class="narration">The game is about to begin...</p>
+      </div>
+
+      <div class="user-lists">
+        <section class="alive-users">
+          <h3>Alive Users</h3>
+          <ul class="user-list">
+            <li class="user">Player 1</li>
+            <li class="user">Player 2</li>
+            <li class="user">Player 3</li>
+          </ul>
+        </section>
+
+        <section class="spectators">
+          <h3>Spectators</h3>
+          <ul class="user-list">
+            <li class="user">Spectator 1</li>
+            <li class="user">Spectator 2</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="game-footer">
+      <div class="chat">
+        <h3>Chat</h3>
+        <ul class="chat-log">
+          <li class="chat-message"><strong>Player 1:</strong> Let's start the game!</li>
+          <li class="chat-message"><strong>Player 2:</strong> Good luck everyone!</li>
+        </ul>
+        <textarea class="chat-input" placeholder="Type your message..."></textarea>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+

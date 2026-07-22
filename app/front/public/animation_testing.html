@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <canvas id="draw_here" width="1000" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        var drawing = document.getElementById("draw_here");
+        var context = drawing.getContext('2d');
+        
+        var image = new Image();
+        image.src = "./stickman.png";
+        image.crossOrigin = true;
+        var intervalID = null;
+        var row = 0;
+        var col = 0;
+        image.onload = function () {
+            intervalID = setInterval(animate, 2000);
+            //context.drawImage(image, 1, 1, 400, 400, 0, 0, 500, 500);
+        }
+
+        function animate() {
+            if (col === 4) {
+                col = 0;
+                row += 1;
+            }
+            if (row === 1 && col === 3) {
+                clearInterval(intervalID);
+            }
+
+            context.drawImage(image, 0+470*col, 0+400*row, 500, 500, 0, 0, 500, 500);
+            col += 1;
+        }
+        
+    </script>
+</body>
+</html>

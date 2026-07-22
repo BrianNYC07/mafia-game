@@ -1,0 +1,71 @@
+# Full Mafia stack, one command: nginx room-hash routing + 2 Node instances +
+# Redis (Socket.IO adapter + room-ownership registry). Every component from the
+# architecture runs and is wired together. See deploy/DEPLOY.md for the VPS +
+# TLS runbook.
+#
+#   docker compose up -d --build          # HTTP bring-up (verify everything)
+#   NGINX_CONF=./deploy/nginx.tls.conf docker compose up -d   # after certs exist
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+
+  back1:
+    build:
+      context: ./app/back
+    environment:
+      PORT: "3001"
+      REDIS_URL: "redis://redis:6379"
+      CORS_ORIGIN: "*"          # same-origin via nginx; tighten to your domain if you like
+      INSTANCE_ID: "back1"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  back2:
+    build:
+      context: ./app/back
+    environment:
+      PORT: "3001"
+      REDIS_URL: "redis://redis:6379"
+      CORS_ORIGIN: "*"
+      INSTANCE_ID: "back2"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/web.Dockerfile
+      args:
+        REACT_APP_SERVER_URL: "/"
+    ports:
+      - "80:80"
+      - "443:443"
+    # NGINX_CONF selects HTTP bring-up vs the TLS config (default: HTTP).
+    volumes:
+      - ${NGINX_CONF:-./deploy/nginx.http.conf}:/etc/nginx/conf.d/default.conf:ro
+      - certbot-www:/var/www/certbot
+      - letsencrypt:/etc/letsencrypt
+    depends_on:
+      - back1
+      - back2
+    restart: unless-stopped
+
+  # One-shot cert tool. Does NOT start on `up` (profile-gated); invoked via
+  # `docker compose run --rm certbot ...` for issuance/renewal (see DEPLOY.md).
+  certbot:
+    image: certbot/certbot
+    profiles: ["certbot"]
+    volumes:
+      - certbot-www:/var/www/certbot
+      - letsencrypt:/etc/letsencrypt
+
+volumes:
+  redis-data:
+  certbot-www:
+  letsencrypt:
