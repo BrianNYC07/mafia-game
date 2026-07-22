@@ -4,6 +4,6 @@ A multiplayer mafia game where players can create or join public lobbies and get
 
 Credits to Caden Khuu, Claire Song, and Tracy Ye for helping develop the original iteration.
 
-Play [here](birbsmafia.lol) (currently needs 5 players to start a game)
+Play [here](https://birbsmafia.lol) (currently needs 5 players to start a game)
 
 
